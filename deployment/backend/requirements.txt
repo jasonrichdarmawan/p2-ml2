@@ -1,10 +1,8 @@
-from keras.models import load_model
-from tensorflow.io import decode_image
-import numpy as np
-from utils import converter, db_df, db_captcha, captcha
-from flask import Flask, request, jsonify, send_file
-
-tensorflow-cpu==2.6.4
+# tensorflow-cpu==2.6.4 does not exist in koyeb.
+# the model was built with tensorflow==2.6.4
+# Note: the model was tested against tensorflow-cpu==2.10.0
+# verdict: no problem
+tensorflow-cpu==2.10.0
 numpy
 Flask==2.2.2
 gunicorn

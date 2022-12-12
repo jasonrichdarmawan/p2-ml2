@@ -1,0 +1,2 @@
+Front End: https://huggingface.co/spaces/kidfrom/frontend-fruit-recognition
+Back End: https://shaky-rosie-kidfrom.koyeb.app
