@@ -1,0 +1,10 @@
+from keras.models import load_model
+from tensorflow.io import decode_image
+import numpy as np
+from utils import converter, db_df, db_captcha, captcha
+from flask import Flask, request, jsonify, send_file
+
+tensorflow-cpu==2.6.4
+numpy
+Flask==2.2.2
+gunicorn
