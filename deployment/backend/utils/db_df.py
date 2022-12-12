@@ -24,7 +24,6 @@ def __fetch():
     
 def sample(kind):
     df = __fetch()
-    print(df.loc[df['kind'] == 'Apple B'])
     return df.loc[df['kind'] == kind, 'path'].sample(n=1).values[0]
 
 def sample_random(n):
