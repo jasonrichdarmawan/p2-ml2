@@ -31,7 +31,6 @@ def run():
             
             if post.status_code == 200:
                 res = post.json()
-                print(res['similar'])
                 
                 st.write(f'Prediction {res["prediction"]}')
                 

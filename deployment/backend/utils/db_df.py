@@ -29,3 +29,6 @@ __isolate()
 
 def sample(kind):
     return df.loc[df['kind'] == kind, 'path'].sample(n=1).values[0]
+
+def sample_random(n):
+    return df.groupby(by='kind').sample(n=n)
