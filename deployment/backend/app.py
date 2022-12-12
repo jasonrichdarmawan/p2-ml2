@@ -2,7 +2,9 @@ from keras.models import load_model
 from tensorflow.io import decode_image
 import numpy as np
 from utils import converter, db_df, db_captcha, captcha
-from flask import Flask, request, jsonify, send_file
+from flask import Flask, request, jsonify
+import uuid
+from random import shuffle
 
 preprocessor = load_model(filepath='./model/preprocessor.h5')
 model = load_model(filepath='./model/seq_5.h5')
@@ -42,19 +44,22 @@ def get_CAPTCHA():
     TODO: use websocket so we can store client target without accessing the entire database,
           / redis so we can store the client target in a dedicated database
     """
-    candidate = db_df.sample_random(n=1)
-    options = candidate['path'].str.split("/").str[-1]
+    candidates = db_df.sample_random(n=1).reset_index(drop=True)
+    candidates_uuid = [str(uuid.uuid4()) for i in range(len(candidates))]
     
-    target = candidate.sample(n=1)
+    target = candidates.sample(n=1)
+    target_uuid = candidates_uuid[target.index.tolist()[0]]
+    print(target_uuid)
     
-    db_captcha.set(request.remote_addr, target['path'].values[0].split("/")[-1])
-    print(target['path'].values[0].split("/")[-1])
+    db_captcha.set(request.remote_addr, target_uuid)
     
     encoded_images = []
-    for image_path in candidate['path'].values:
+    for candidate_uuid, image_path in zip(candidates_uuid, candidates['path'].values):
         encoded_images.append(
-            [image_path.split("/")[-1], captcha.load_image(image_path)]
+            [candidate_uuid, captcha.load_image(image_path)]
         )
+        
+    shuffle(encoded_images)
     
     return jsonify(
         target=target['kind'].values[0],
@@ -65,7 +70,7 @@ def get_CAPTCHA():
 def post_CAPTCHA():
     args = request.json
     
-    target = args.get("target")
+    target = args.get("target_uuid")
     if target == None:
         return "", 400
     
