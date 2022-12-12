@@ -31,7 +31,17 @@ def predict():
     image = preprocessor(image)
     images = np.array([image])
 
-    y_pred = converter.int_to_kinds(np.argmax(model.predict(images), axis=1))
+    y_pred = model.predict(images)
+    
+    # y_pred uses softmax, so it's a predicted probability.
+    # we will reject prediction if the predicted probability is lower than 50%
+    # if the model predicted wrong but have high predicted probability
+    # we can't do anything about it other than retrain the model with more data
+    # which is not an optiton due to limited resources
+    if True not in (y_pred >= 0.5):
+        return "", 400
+    
+    y_pred = converter.int_to_kinds(np.argmax(y_pred, axis=1))
 
     save_img(path=f'static/{y_pred[0]}/{file.filename}', x=image)
 
