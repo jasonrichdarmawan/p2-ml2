@@ -1,5 +1,6 @@
 from keras.models import load_model
 from tensorflow.io import decode_image
+from tensorflow.keras.utils import save_img
 import numpy as np
 from utils import converter, db_df, db_captcha, captcha
 from flask import Flask, request, jsonify
@@ -31,6 +32,8 @@ def predict():
     images = np.array([image])
 
     y_pred = converter.int_to_kinds(np.argmax(model.predict(images), axis=1))
+
+    save_img(path=f'static/{y_pred[0]}/{file.filename}', x=image)
 
     return jsonify(
         prediction=y_pred[0],
