@@ -6,3 +6,5 @@ tensorflow-cpu==2.10.0
 numpy
 Flask==2.2.2
 gunicorn
+pandas
+pillow
