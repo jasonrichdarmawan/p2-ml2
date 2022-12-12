@@ -1,0 +1,1 @@
+{"0": "Apple A", "1": "Apple B", "2": "Apple C", "3": "Apple D", "4": "Apple E", "5": "Apple F", "6": "Banana", "7": "Carambola", "8": "Kiwi B", "9": "Kiwi C", "10": "Mango", "11": "Orange", "12": "Peach", "13": "Pear", "14": "Persimmon", "15": "Pitaya", "16": "Plum", "17": "Pomegranate", "18": "Tomatoes", "19": "guava A", "20": "guava B", "21": "kiwi A", "22": "muskmelon"}
